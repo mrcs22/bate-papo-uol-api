@@ -41,4 +41,8 @@ app.post("/participants", (req, res) => {
   res.sendStatus(200);
 });
 
+app.get("/participants", (req, res) => {
+  res.status(200).send(participants);
+});
+
 app.listen(4000);
