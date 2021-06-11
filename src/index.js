@@ -45,4 +45,35 @@ app.get("/participants", (req, res) => {
   res.status(200).send(participants);
 });
 
+app.post("/messages", (req, res) => {
+  const now = dayjs().format("HH:mm:ss");
+  let { to, text, type } = req.body;
+  const from = req.headers.user;
+
+  to = stripHtml(to).result;
+  text = stripHtml(text).result;
+  type = stripHtml(type).result;
+
+  const isUserOk = !!participants.find((p) => p.name === from);
+  const isToOk = to !== "" && to.length > 0;
+  const isTextOk = text !== "" && text.length > 0;
+  const isTypeOk = type === "message" || type === "private_message";
+
+  if (isUserOk && isToOk && isTextOk && isTypeOk) {
+    const newMessage = {
+      from,
+      to,
+      text,
+      type,
+      time: now,
+    };
+
+    messages.push(newMessage);
+    fs.writeFileSync("./src/data.json", JSON.stringify(data));
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400);
+  }
+});
+
 app.listen(4000);
