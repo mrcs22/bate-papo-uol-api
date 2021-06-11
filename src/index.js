@@ -76,4 +76,24 @@ app.post("/messages", (req, res) => {
   }
 });
 
+app.get("/messages", (req, res) => {
+  const limit = +req.query.limit;
+  const user = req.headers.user;
+
+  const visibleMessages = messages.filter(
+    (m) => m.type === "message" || m.to === user || m.from === user
+  );
+
+  if (!!limit) {
+    const limitedMessages =
+      visibleMessages.length <= limit
+        ? visibleMessages
+        : visibleMessages.slice(visibleMessages.length - limit);
+
+    res.send(limitedMessages);
+  } else {
+    res.send(visibleMessages);
+  }
+});
+
 app.listen(4000);

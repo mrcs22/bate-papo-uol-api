@@ -1,37 +1,4 @@
 {
-  "participants": [
-    { "name": "marc", "lastStatus": 1623440600138 },
-    { "name": "aaa", "lastStatus": 1623440636725 },
-    { "name": "Jão", "lastStatus": 1623443129338 }
-  ],
-  "messages": [
-    {
-      "from": "marc",
-      "to": "Todos",
-      "text": "entra na sala...",
-      "type": "status",
-      "time": "16:43:20"
-    },
-    {
-      "from": "aaa",
-      "to": "Todos",
-      "text": "entra na sala...",
-      "type": "status",
-      "time": "16:43:56"
-    },
-    {
-      "from": "Jão",
-      "to": "Todos",
-      "text": "entra na sala...",
-      "type": "status",
-      "time": "17:25:29"
-    },
-    {
-      "from": "Jão",
-      "to": "Todos",
-      "text": "aaaa",
-      "type": "message",
-      "time": "17:25:35"
-    }
-  ]
+  "participants": [],
+  "messages": []
 }
