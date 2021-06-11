@@ -81,7 +81,11 @@ app.get("/messages", (req, res) => {
   const user = req.headers.user;
 
   const visibleMessages = messages.filter(
-    (m) => m.type === "message" || m.to === user || m.from === user
+    (m) =>
+      m.type === "message" ||
+      m.to === user ||
+      m.from === user ||
+      m.type === "status"
   );
 
   if (!!limit) {
@@ -93,6 +97,21 @@ app.get("/messages", (req, res) => {
     res.send(limitedMessages);
   } else {
     res.send(visibleMessages);
+  }
+});
+
+app.post("/status", (req, res) => {
+  const now = Date.now();
+
+  const userName = req.headers.user;
+  const user = participants.find((u) => u.name === userName);
+
+  if (!!user) {
+    user.lastStatus = now;
+    fs.writeFileSync("./src/data.json", JSON.stringify(data));
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400);
   }
 });
 
