@@ -115,4 +115,34 @@ app.post("/status", (req, res) => {
   }
 });
 
+setInterval(removeOfflineParticipants, 15000);
+
+function removeOfflineParticipants() {
+  const now = Date.now();
+  const time = dayjs().format("HH:mm:ss");
+  const offlineParticipantsIndex = [];
+
+  participants.forEach((p, i) => {
+    if (now - p.lastStatus > 10000) {
+      offlineParticipantsIndex.push(i);
+    }
+  });
+
+  offlineParticipantsIndex.forEach((i) => {
+    const offlineParticipant = participants[i];
+
+    messages.push({
+      from: offlineParticipant.name,
+      to: "Todos",
+      text: "sai da sala...",
+      type: "status",
+      time: time,
+    });
+
+    participants.splice(i, 1);
+
+    fs.writeFileSync("./src/data.json", JSON.stringify(data));
+  });
+}
+
 app.listen(4000);
